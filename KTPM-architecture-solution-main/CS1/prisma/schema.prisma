@@ -1,0 +1,15 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db" // Đường dẫn đến file SQLite
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model URL {
+  id      String   @id @default(cuid())
+  url     String
+  expiry  DateTime? 
+  createdAt DateTime @default(now())
+}
