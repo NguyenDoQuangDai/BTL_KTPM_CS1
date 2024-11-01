@@ -1,18 +1,11 @@
 const express = require('express');
-const { initializeDatabase } = require('./models');
 const lib = require('./utils');
 
 const app = express();
 const port = 3000;
 
-// Middleware để phân tích dữ liệu JSON
 app.use(express.json());
-
-// Phục vụ các file tĩnh trong thư mục 'public'
 app.use(express.static('public'));
-
-// Khởi tạo cơ sở dữ liệu
-initializeDatabase();
 
 // Chuyển hướng đến URL gốc khi người dùng truy cập đường dẫn rút gọn
 app.get('/:id', async (req, res) => {
@@ -22,7 +15,7 @@ app.get('/:id', async (req, res) => {
         if (!url) {
             res.status(404).send("<h1>404 - Not Found</h1>");
         } else {
-            res.redirect(url);  // Redirect đến URL gốc
+            res.redirect(url);
         }
     } catch (err) {
         res.status(500).send(err.message);
@@ -32,9 +25,9 @@ app.get('/:id', async (req, res) => {
 // Tạo URL rút gọn mới
 app.post('/create', async (req, res) => {
     try {
-        const { url, expiry } = req.body; // Lấy URL và thời gian hết hạn từ body của request
+        const { url, expiry } = req.body;
         const newID = await lib.shortUrl(url, expiry);
-        res.json({ id: newID }); // Trả về ID rút gọn
+        res.json({ id: newID });
     } catch (err) {
         res.status(500).send(err.message);
     }
