@@ -1,5 +1,4 @@
 const express = require('express');
-const { initializeDatabase } = require('./models');
 const lib = require('./utils');
 
 const app = express();
