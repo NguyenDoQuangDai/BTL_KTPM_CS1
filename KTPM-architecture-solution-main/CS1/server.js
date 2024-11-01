@@ -13,7 +13,7 @@ app.get('/:id', async (req, res) => {
         const id = req.params.id;
         const url = await lib.findOrigin(id);
         if (!url) {
-            res.status(404).send("<h1>404 - Not Found</h1>");
+            res.status(404).sendFile(__dirname + '/public/404.html');
         } else {
             res.redirect(url);
         }
@@ -21,6 +21,7 @@ app.get('/:id', async (req, res) => {
         res.status(500).send(err.message);
     }
 });
+
 
 // Tạo URL rút gọn mới
 app.post('/create', async (req, res) => {
@@ -33,6 +34,7 @@ app.post('/create', async (req, res) => {
     }
 });
 
+// Bắt đầu server
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
