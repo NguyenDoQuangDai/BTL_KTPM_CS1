@@ -1,4 +1,4 @@
-const { URL } = require('./models');
+const prisma = require('./prismaClient');
 const NodeCache = require('node-cache');
 
 const cache = new NodeCache({ stdTTL: 600 }); // Cache với thời gian sống là 10 phút
@@ -21,7 +21,10 @@ async function findOrigin(id) {
         return cachedUrl;
     }
 
-    const urlEntry = await URL.findOne({ where: { id } });
+    const urlEntry = await prisma.uRL.findUnique({
+        where: { id },
+    });
+
     if (urlEntry) {
         cache.set(id, urlEntry.url); // Lưu vào cache
         return urlEntry.url;
@@ -31,7 +34,13 @@ async function findOrigin(id) {
 
 // Tạo bản ghi mới trong cơ sở dữ liệu
 async function create(id, url, expiry) {
-    await URL.create({ id, url, expiry });
+    await prisma.uRL.create({
+        data: {
+            id,
+            url,
+            expiry: expiry ? new Date(expiry) : null,
+        },
+    });
 }
 
 // Hàm rút gọn URL
@@ -42,15 +51,24 @@ async function shortUrl(url, expiry) {
     }
 
     // Kiểm tra cache trước
-    const existingEntry = await URL.findOne({ where: { url } });
-    if (existingEntry) {
-        // Nếu đã có trong cơ sở dữ liệu, lưu vào cache
-        cache.set(existingEntry.id, url); // Lưu ID tương ứng vào cache
-        return existingEntry.id; // Trả về ID đã tồn tại
+    const cachedEntry = cache.keys().find(key => cache.get(key) === url);
+    if (cachedEntry) {
+        return cachedEntry; // Nếu có trong cache, trả về ID
     }
 
+    // Kiểm tra cơ sở dữ liệu xem URL đã tồn tại chưa
+    const existingUrl = await prisma.uRL.findFirst({
+        where: { url },
+    });
+
+    if (existingUrl) {
+        cache.set(existingUrl.id, url); // Lưu vào cache
+        return existingUrl.id;
+    }
+
+    // Tạo ID mới cho URL rút gọn
     while (true) {
-        const newID = makeID(6);
+        const newID = makeID(5);
         const originUrl = await findOrigin(newID);
         if (!originUrl) {
             await create(newID, url, expiry);
@@ -59,7 +77,6 @@ async function shortUrl(url, expiry) {
         }
     }
 }
-
 
 module.exports = {
     findOrigin,
