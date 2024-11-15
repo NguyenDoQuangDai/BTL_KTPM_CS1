@@ -1,6 +1,25 @@
-# KTPM-architecture-solution
-Dưới đây là 3 case study để các bạn có thể áp dụng các mẫu kiến trúc. Các đoạn mã nguồn có thể chưa tối ưu, nếu có vấn đề đừng ngần ngại tạo thêm pull request.
+# CASE STUDY 1
 
-## Star History
+## Hướng dẫn cài đặt
+```sh
+# Cài đặt các gói liên quan: Node.js và npm
+$ npm install express sequelize pg pg-hstore body-parser cors dotenv
 
-[![Star History Chart](https://api.star-history.com/svg?repos=maytinhdibo/KTPM-architecture-solution&type=Date)](https://star-history.com/#maytinhdibo/KTPM-architecture-solution&Date)
+# Tạo folder cho database
+mkdir url-shortener
+cd url-shortener
+npm init -y
+
+# Cài đặt PostgreSQL:
+-Cài đặt theo mặc định
+-Mở pgAdmin 4 từ Start Menu.
+Kết nối với server PostgreSQL:
+Nhập mật khẩu "123456789" cho tài khoản postgres.
+Nhấp "Save Password".
+-Tạo cơ sở dữ liệu mới:
+Trong pgAdmin, click chuột phải vào Databases > Create > Database.
+Nhập tên cơ sở dữ liệu "short_url_db" và nhấp Save.
+
+# Khởi chạy ứng dụng
+$ node server.js
+```
