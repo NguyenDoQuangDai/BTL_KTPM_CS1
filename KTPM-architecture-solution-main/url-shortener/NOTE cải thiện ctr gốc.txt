@@ -1,0 +1,12 @@
+Báo cáo tối ưu và cải tiến chương trình rút gọn link
+Chương trình mới đã được viết lại để cải thiện hiệu suất và khả năng mở rộng khi xử lý số lượng lớn yêu cầu đồng thời. Dưới đây là những thay đổi chính:
+
+Sử dụng Sequelize ORM: Chương trình mới sử dụng Sequelize ORM để thao tác cơ sở dữ liệu MySQL thay vì SQLite3. Việc này giúp chương trình xử lý hiệu quả hơn và ổn định hơn trong môi trường có nhiều request đồng thời, đặc biệt khi triển khai trong môi trường sản xuất. MySQL có khả năng hỗ trợ nhiều kết nối đồng thời hơn so với SQLite, giúp giảm thiểu lỗi và tăng hiệu suất.
+
+Chuyển đổi cấu trúc dự án: Cấu trúc chương trình mới được tách ra theo mô hình MVC (Model-View-Controller), với các thư mục controllers, models giúp tổ chức mã nguồn rõ ràng hơn, dễ bảo trì và mở rộng.
+
+Sử dụng nanoid để tạo ID: Thay vì hàm tự viết makeID, chương trình mới sử dụng thư viện nanoid để tạo ID ngẫu nhiên với độ dài cụ thể. nanoid được tối ưu hóa cho việc tạo ID ngắn và không trùng lặp, giúp giảm thiểu khả năng xung đột ID.
+
+Sử dụng phương thức redirect để điều hướng URL: Ở chương trình cũ, URL gốc chỉ được trả về dưới dạng text. Trong chương trình mới, phương thức redirect của Express được sử dụng để tự động điều hướng người dùng đến URL gốc, cải thiện trải nghiệm người dùng.
+
+Xử lý lỗi tốt hơn: Cả hai phương thức đều có cơ chế xử lý lỗi chi tiết, giúp API trả về mã trạng thái HTTP chính xác, giúp dễ dàng theo dõi và xử lý khi có lỗi xảy ra.
