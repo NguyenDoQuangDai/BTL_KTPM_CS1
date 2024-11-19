@@ -2,14 +2,6 @@
 
 ## Hướng dẫn cài đặt
 ```sh
-# Cài đặt các gói liên quan: Node.js và npm
-$ npm install express sequelize pg pg-hstore body-parser cors dotenv
-
-# Tạo folder cho database
-mkdir url-shortener
-cd url-shortener
-npm init -y
-
 # Cài đặt PostgreSQL:
 -Cài đặt theo mặc định
 -Mở pgAdmin 4 từ Start Menu.
@@ -19,6 +11,10 @@ Nhấp "Save Password".
 -Tạo cơ sở dữ liệu mới:
 Trong pgAdmin, click chuột phải vào Databases > Create > Database.
 Nhập tên cơ sở dữ liệu "short_url_db" và nhấp Save.
+
+# Cài đặt các gói liên quan: Node.js và npm
+cd url-shortener
+npm install express sequelize pg pg-hstore body-parser cors dotenv
 
 # Khởi chạy ứng dụng
 $ node server.js
