@@ -35,12 +35,22 @@ exports.getOriginalUrl = async (req, res) => {
     try {
         // Lấy ID rút gọn từ các tham số URL (req.params) của yêu cầu GET
         const { id } = req.params;
-        
+
         // Tìm link trong cơ sở dữ liệu theo ID rút gọn (cột "id" trong bảng "links")
         const link = await Link.findOne({ where: { id } });
 
         if (link) {
             console.log('Redirecting to:', link.url); // Debug
+            
+            // Tạo ETag từ URL gốc
+            const etag = `"${Buffer.from(link.url).toString('base64')}"`;
+            if (req.headers['if-none-match'] === etag) {
+                return res.status(304).end(); // Không thay đổi
+            }
+
+            // Set ETag header
+            res.set('ETag', etag);
+            res.set('Cache-Control', 'public, max-age=259200'); // Cache 3 ngày
 
             // Nếu tìm thấy link, chuyển hướng người dùng đến URL gốc đã được lưu trong cơ sở dữ liệu
             res.redirect(link.url);
@@ -51,3 +61,6 @@ exports.getOriginalUrl = async (req, res) => {
         res.status(500).json({ error: 'Error fetching original link' });
     }
 };
+
+
+

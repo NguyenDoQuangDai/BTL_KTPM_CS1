@@ -5,9 +5,14 @@ const path = require('path');
 
 const app = express();
 
-// Middleware để xử lý JSON và phục vụ file tĩnh
+// Middleware để xử lý JSON
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Phục vụ file tĩnh từ thư mục public (thêm caching)
+app.use(express.static(path.join(__dirname, 'public'), {
+    maxAge: '3d',  // Cache tệp tĩnh trong 3 ngày
+    etag: true,    // Sử dụng ETag
+}));
 
 // Định tuyến cho trang chính (index.html)
 app.get('/', (req, res) => {
@@ -35,4 +40,3 @@ sequelize.sync({ force: false }) // Không xóa dữ liệu nếu bảng đã t�
         });
     })
     .catch(err => console.error('Error syncing database:', err)); // Xử lý lỗi đồng bộ
-
