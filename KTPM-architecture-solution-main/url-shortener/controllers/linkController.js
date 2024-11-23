@@ -50,7 +50,7 @@ exports.getOriginalUrl = async (req, res) => {
 
             // Set ETag header
             res.set('ETag', etag);
-            res.set('Cache-Control', 'public, max-age=259200'); // Cache 3 ngày
+            res.set('Cache-Control', 'public, max-age=86400'); // Cache 1 ngày
 
             // Nếu tìm thấy link, chuyển hướng người dùng đến URL gốc đã được lưu trong cơ sở dữ liệu
             res.redirect(link.url);

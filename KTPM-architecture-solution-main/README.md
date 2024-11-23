@@ -14,7 +14,7 @@ Nhập tên cơ sở dữ liệu "short_url_db" và nhấp Save.
 
 # Cài đặt các gói liên quan: Node.js và npm
 cd url-shortener
-npm install express sequelize pg pg-hstore body-parser cors dotenv
+npm install express sequelize pg pg-hstore body-parser cors dotenv idb
 
 # Khởi chạy ứng dụng
 $ node server.js
