@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "amqplib": "^0.10.4",
+    "express": "^4.21.1",
+    "mysql2": "^3.11.4",
+    "nanoid": "^5.0.8",
+    "pg": "^8.13.1",
+    "pg-hstore": "^2.3.4",
+    "request": "^2.88.2",
+    "sequelize": "^6.37.5",
+    "uuidv4": "^6.2.13"
+  }
+}
