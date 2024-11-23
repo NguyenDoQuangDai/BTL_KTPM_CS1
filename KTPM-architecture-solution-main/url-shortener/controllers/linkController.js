@@ -13,8 +13,8 @@ exports.createShortLink = async (req, res) => {
         // Import nanoid để tạo ID ngẫu nhiên
         const { nanoid } = await import('nanoid');
 
-        // Tạo một ID ngẫu nhiên với độ dài 6 ký tự cho link rút gọn
-        const id = nanoid(6);
+        // Tạo một ID ngẫu nhiên với độ dài 5 ký tự cho link rút gọn
+        const id = nanoid(5);
 
         // Lấy URL gốc từ body của yêu cầu POST
         const { url } = req.body;
@@ -28,7 +28,7 @@ exports.createShortLink = async (req, res) => {
         // Kiểm tra cache trước khi tạo mới
         const cachedData = cache.get(fullUrl);
         if (cachedData) {
-            console.log('CREATE - Response from memory cache');
+            console.log('CREATE - Cache hit in server memory, Response from memory cache : ', fullUrl, " | ", cachedData.id); // Debug
             return res.status(200).json({ shortUrl: `${req.protocol}://${req.get('host')}/short/${cachedData.id}` });
         }
 
@@ -37,6 +37,8 @@ exports.createShortLink = async (req, res) => {
 
         // Thêm vào cache
         cache.set(fullUrl, { id });
+
+        console.log('CREATE - Not cached in server memory, shorten URL created : ', fullUrl, " | ", id); // Debug
 
         // Trả về phản hồi cho người dùng
         res.status(201).json({ shortUrl: `${req.protocol}://${req.get('host')}/short/${id}` });
@@ -55,7 +57,7 @@ exports.getOriginalUrl = async (req, res) => {
         // Kiểm tra cache trước khi truy vấn database
         const cachedData = cache.get(id);
         if (cachedData) {
-            console.log('GET - Response from memory cache');
+            console.log('GET - Cache hit in server memory, Response from memory cache : ', id, " | ", cachedData.url);
             return res.redirect(cachedData.url);
         }
 
@@ -63,6 +65,9 @@ exports.getOriginalUrl = async (req, res) => {
         const link = await Link.findOne({ where: { id } });
 
         if (link) {
+
+            console.log('GET - Not cached in server memory, redirecting : ', id, " | ",link.url);
+
             // Nếu tìm thấy, lưu vào cache
             cache.set(id, { url: link.url });
 
