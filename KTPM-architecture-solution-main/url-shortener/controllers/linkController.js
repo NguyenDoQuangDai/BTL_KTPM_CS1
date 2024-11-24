@@ -1,3 +1,4 @@
+const path = require('path');
 // Import model Link để thao tác với cơ sở dữ liệu
 const Link = require('../models/link');
 
@@ -83,7 +84,7 @@ exports.getOriginalUrl = async (req, res) => {
             // Chuyển hướng người dùng đến URL gốc
             res.redirect(link.url);
         } else {
-            res.status(404).json({ error: 'Link not found' });
+            res.status(404).sendFile(path.join(__dirname, '..', 'public', '404.html'));
         }
     } catch (error) {
         console.error('Error fetching original link:', error);
