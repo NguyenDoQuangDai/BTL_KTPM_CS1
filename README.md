@@ -35,7 +35,7 @@ Dưới đây là một chương trình đơn giản sử dụng `express.js`, c
  - Tối ưu chương trình trên (nếu cảm thấy cần thiết)
  - Triển khai thành web hoàn chỉnh (tuỳ chọn)
  - Thao tác CSDL theo lập trình hướng đối, thêm lớp persistent bằng cách sử dụng ORM (Object-Relational Mapping)
- - *Đánh giá* và *cải tiến* hiệu năng dựa trên một mẫu kiến trúc tuỳ chọn.
+ - *Đánh giá* và *cải tiến* hiệu năng dựa trên một mẫu kiến trúc đám mây tuỳ chọn.
  - Thiết kế logic, dễ sử dụng
  - Giao diện Responsive, đẹp, hiện đại, có bản sắc, đặc trưng nhận dạng thương hiệu nổi bật
  - (Viết lại và/hoặc định tuyến URL)
